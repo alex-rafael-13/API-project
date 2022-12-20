@@ -8,16 +8,15 @@ const cookieParser = require('cookie-parser');
 
 //Initializing Express
 const app = express();
-// backend/app.js
-const routes = require('./routes');
-// Connect all the routes
-app.use(routes);
 //Connecting morgan middleware with Express
 app.use(morgan('dev'));
 //Adding cookie-parser middleware using Express
 app.use(cookieParser());
 //express.json() to parse JSON files
 app.use(express.json());
+// Connect all the routes
+const routes = require('./routes');
+app.use(routes);
 
 //Checks if the environment is in production
 const { environment } = require('./config');
@@ -77,5 +76,6 @@ app.use((err, _req, res, _next) => {
     stack: isProduction ? null : err.stack
   });
 });
+//------------------------------------------------------------//
 
 module.exports = app;
