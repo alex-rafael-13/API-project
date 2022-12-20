@@ -4,8 +4,17 @@ const router = express.Router()
 //Import models
  const { User } = require('../../db/models');
 //Import functions from utils/auth.js
-const { setTokenCookie, restoreUser, requireAuth } = require('../../utils/auth.js'); 
+const { setTokenCookie, restoreUser, requireAuth } = require('../../utils/auth.js');
+
+//Import session and users routers
+const sessionRouter = require('./session');
+const usersRouter = require('./users');
+
+//Routers:
 router.use(restoreUser);
+router.use('/session',sessionRouter);
+router.use('/users', usersRouter)
+
 //Testing the router
 router.post('/test', function(req, res){    
     res.json({requestBody: req.body});

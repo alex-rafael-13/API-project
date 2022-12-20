@@ -2,9 +2,13 @@ const express = require('express');
 require('express-async-errors');
 const morgan = require('morgan');
 const cors = require('cors');
-const csurf = require('csurf');
 const helmet = require('helmet');
 const cookieParser = require('cookie-parser');
+const csurf = require('csurf');
+
+//Checks if the environment is in production
+const { environment } = require('./config');
+const isProduction = environment === 'production';
 
 //Initializing Express
 const app = express();
@@ -14,13 +18,7 @@ app.use(morgan('dev'));
 app.use(cookieParser());
 //express.json() to parse JSON files
 app.use(express.json());
-// Connect all the routes
-const routes = require('./routes');
-app.use(routes);
 
-//Checks if the environment is in production
-const { environment } = require('./config');
-const isProduction = environment === 'production';
 // Security Middleware
 if (!isProduction) {
   // enable cors only in development
@@ -28,11 +26,11 @@ if (!isProduction) {
 }
 // helmet helps set a variety of headers to better secure your app
 app.use(
-    helmet.crossOriginResourcePolicy({
+  helmet.crossOriginResourcePolicy({
     policy: "cross-origin"
   })
 );
-// Set the _csrf token and create req.csrfToken method
+  // Set the _csrf token and create req.csrfToken method
 app.use(
   csurf({
     cookie: {
@@ -42,6 +40,10 @@ app.use(
     }
   })
 );
+    
+// Connect all the routes
+const routes = require('./routes');
+app.use(routes);
 
 //--------------- Error Handling Middleware: ---------------//
 //Catches unhandled requests and fowards to error handling:
