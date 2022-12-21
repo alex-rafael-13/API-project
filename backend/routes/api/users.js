@@ -1,7 +1,7 @@
 const express = require('express')
 
 //Importing setToken, requireAuth, and User model
-const { setToken, requireAuth, setTokenCookie } = require('../../utils/auth')
+const { setToken, requireAuth, setTokenCookie, restoreUser } = require('../../utils/auth')
 const { User } = require('../../db/models')
 
 //initiating router
@@ -18,6 +18,5 @@ router.post('/', async (req, res) => {
         user: user
     })
 })
-
 
 module.exports = router
