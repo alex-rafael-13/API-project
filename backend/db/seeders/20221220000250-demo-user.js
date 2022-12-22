@@ -14,7 +14,7 @@ module.exports = {
      * Add seed commands here.
     */
    options.tableName = 'Users'
-   await queryInterface.bulkInsert(options.tableName, [
+   await queryInterface.bulkInsert(options, [
     {
       firstName:"Demo",
       lastName: 'User',
