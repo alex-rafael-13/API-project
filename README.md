@@ -1,4 +1,4 @@
-# `<name of application here>`
+# AirBnB Backend Project
 
 ## Database Schema Design
 
